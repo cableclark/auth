@@ -2,36 +2,34 @@
 
 require __DIR__ . '/../app/Container.php';
 require __DIR__ . '/../app/Database.php';
+require __DIR__ . '/../app/helpers.php';
 
 use App\Container;
 
 $container = new Container();
 
-$container->bind('app\Database', function () {
+$config = require __DIR__ . '/../src/config.php';
 
-  $host = 'igor.test';
-  $dbname   = 'test';
-  $user = 'root';
-  $pass = '';
-  $charset = 'utf8mb4';
-  $port= '3306';
+$container->bind('app\Database', function (array $config) {
 
 
-  $dsn = "mysql:host=$host;dbname=$dbname;port=$port;charset=$charset";
+  $dsn = "mysql:host=".$config['host'].";dbname=" . $config['dbname']. ";port=" . $config['port']."charset=". $config['charset']. ";";
+  
   $options = [
       PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
       PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
       PDO::ATTR_EMULATE_PREPARES   => false,
   ];
-  $pdo = new PDO($dsn, $user, $pass, $options);
+
+  $pdo = new PDO($dsn, $config['user'], $config['pass'], $options);
 
   $db = new Database($pdo); 
 
   return $db;
 
-});
+}, $config['database'] );
 
 $database = $container->resolve('app\Database');
 
 
-$database->allSet();
+dd($database->query("SELECT * FROM users", ['user' =>"user"]));

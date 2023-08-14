@@ -11,9 +11,18 @@ class Database {
     }
    
 
-    public function allSet () {
+    public function query ($query, array $args=[]) {
         
-        echo "All is good";
+        $stmt = $this->pdo->prepare($query);
+
+        if (!empty($args)) {
+
+            echo "Arguments have been set";
+
+        } else {
+            return  $stmt->execute();
+
+        }
 
     }
 }
