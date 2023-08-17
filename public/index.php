@@ -8,7 +8,9 @@ $router->post("/register");
 
 $router->post("/login");
 
-$router->handle($_SERVER['REQUEST_URI']);
+$path = parse_url($_SERVER['REQUEST_URI'])['path'];
+
+$router->handle($path);
 
 require __DIR__ . '/../views/index.php';
 
