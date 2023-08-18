@@ -8,7 +8,6 @@ class Router {
     public function handle ($uri, $args=[]) {
       
       
-   
 
         foreach ($this->routes as $route) {
             
