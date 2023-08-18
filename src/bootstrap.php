@@ -7,4 +7,4 @@ require __DIR__ . '/../app/DatabaseProvider.php';
 
 $database = $container->resolve('app\Database');
 
-$router= new Router();
+$router = new Router();

@@ -8,7 +8,7 @@ $config = require __DIR__ . '/../src/config.php';
 
 $container->bind('app\Database', function (array $config) {
 
-  $dsn = "mysql:host=".$config['host'].";dbname=" . $config['dbname']. ";port=" . $config['port']."charset=". $config['charset']. ";";
+  $dsn = "mysql:host={$config['host']};dbname={$config['dbname']};port={$config['port']};charset={$config['charset']};";
   
   $options = [
       PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,

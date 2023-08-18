@@ -4,6 +4,7 @@ require __DIR__ . '/../src/bootstrap.php';
 
 
 
+//Define routes Routes
 $router->post("/register");
 
 $router->post("/login");
@@ -12,6 +13,5 @@ $path = parse_url($_SERVER['REQUEST_URI'])['path'];
 
 $router->handle($path);
 
-require __DIR__ . '/../views/index.php';
 
 

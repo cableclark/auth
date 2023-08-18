@@ -5,20 +5,26 @@ class Router {
     private $routes = [];
 
 
-    public function handle ($uri) {
-       
+    public function handle ($uri, $args=[]) {
+      
+      
+   
 
         foreach ($this->routes as $route) {
             
         
             if ($route["route"] === $uri) {
-
-             require __DIR__ . '/../src/'. $route["route"] . '.php';
+                
+                require (__DIR__ . '/Controllers'. $route["route"] . '.php');
+                
+                return;
+           
             }
+
 
         }
 
-
+        require (__DIR__ . '/../views/index.view.php');
        
 
     }
