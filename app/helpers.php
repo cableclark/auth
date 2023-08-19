@@ -12,3 +12,14 @@ if (!function_exists('dd')) {
 }
 
 
+if (!function_exists('view')) {
+
+    function view ($view, $args = []) {
+
+        extract($args);
+
+        require (__DIR__ . '/../views/'. $view . '.php');
+
+    }
+    
+}

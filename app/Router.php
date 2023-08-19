@@ -14,6 +14,7 @@ class Router {
         
             if ($route["route"] === $uri) {
                 
+
                 require (__DIR__ . '/Controllers'. $route["route"] . '.php');
                 
                 return;
