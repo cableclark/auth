@@ -2,6 +2,10 @@
 
 use App\Container;
 
+use App\Database;
+
+require 'Container.php';
+
 $container = new Container();
 
 $config = require __DIR__ . '/../src/config.php';

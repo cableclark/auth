@@ -1,9 +1,18 @@
 <?php
 
-require __DIR__ . '/../app/Container.php';
-require __DIR__ . '/../app/Database.php';
-require __DIR__ . '/../app/helpers.php'; 
-require __DIR__ . '/../app/DatabaseProvider.php';
+use App\Router; 
+
+const BASE_APP_DIR = __DIR__ . '/../';
+
+spl_autoload_register(function ($class) {
+
+    require  BASE_APP_DIR . $class . '.php';
+
+});
+
+require BASE_APP_DIR . 'App\helpers.php'; 
+
+require BASE_APP_DIR . 'App\DatabaseProvider.php';
 
 $database = $container->resolve('app\Database');
 
