@@ -1,0 +1,19 @@
+{
+    "name": "cable/auth",
+    "description": "A microframework for fun",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Cable\\Auth\\": "src/",
+            "App\\": "App/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Igor Stojanovski",
+            "email": "cableclark@gmail.com"
+        }
+    ],
+    "require": {}
+}

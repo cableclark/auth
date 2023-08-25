@@ -6,9 +6,18 @@ const BASE_APP_DIR = __DIR__ . '/../';
 
 spl_autoload_register(function ($class) {
 
+    $class = str_replace("//", DIRECTORY_SEPARATOR, $class);
+
+    if(class_exists($class)){
+
     require  BASE_APP_DIR . $class . '.php';
+    
+    }
 
 });
+
+require __DIR__ . '\..\vendor\autoload.php';
+
 
 require BASE_APP_DIR . 'App\helpers.php'; 
 
