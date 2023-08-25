@@ -1,9 +1,9 @@
 <?php 
-
 require __DIR__ . '/../src/bootstrap.php';
 
+
 //Define routes Routes
-$router->post("/register");
+$router->get("/register");
 
 $router->post("/login");
 
