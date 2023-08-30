@@ -10,7 +10,7 @@ spl_autoload_register(function ($class) {
 
     if(class_exists($class)){
 
-    require  BASE_APP_DIR . $class . '.php';
+    require BASE_APP_DIR . $class . '.php';
     
     }
 
