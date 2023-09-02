@@ -14,7 +14,7 @@ if (!function_exists('dd')) {
 
 if (!function_exists('view')) {
 
-    function view ($view, $args = []) {
+    function view ($view, $args) {
 
         extract($args);
 

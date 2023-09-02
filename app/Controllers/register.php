@@ -1,3 +1,9 @@
 <?php
 
-view ('register.view');
+namespace App;
+
+
+$validation = new Validation($_POST); 
+
+
+view('register.view', $validation->validateForm());

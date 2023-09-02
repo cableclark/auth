@@ -1,11 +1,4 @@
-<!doctype html>
-<html class="h-full bg-white">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <title>Home</title>
-</head>
+<?php require('partials/header.php'); ?> 
     <body class="h-full">
     <section class="bg-gray-50 dark:bg-gray-900">
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -48,5 +41,4 @@
             </div>
         </div>
     </section>
-    </body>
-</html>
+    <?php require('/partials/footer.php')?>

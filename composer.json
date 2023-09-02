@@ -15,5 +15,7 @@
             "email": "cableclark@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "wixel/gump": "^1.11"
+    }
 }
