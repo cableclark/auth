@@ -6,7 +6,7 @@ class Validation {
 
     private $data;
     public $errors = [];
-    private static $fields = ['password', 'email'];
+    private static $fields = ['password', 'confirm-password', 'email'];
 
     public function __construct($post_data){
         $this->data = $post_data;
@@ -32,15 +32,18 @@ class Validation {
 
         $val = trim($this->data['password']);
         
+        $val2 = trim($this->data['confirm-password']);
 
         if(empty($val)){
             $this->addError('password', 'password cannot be empty');    
-        } else {
-            if(!preg_match('/^[a-zA-Z0-9]{6,12}$/', $val)){
+        } 
+        elseif (!preg_match('/^[a-zA-Z0-9]{6,12}$/', $val)){
             $this->addError('password','password must be 6-12 chars & alphanumeric');
             }
-        }
-
+        elseif ($val !== $val2) {
+            $this->addError('email', 'email must be a valid email address');
+            }
+            
     }
 
     private function validateEmail(){
@@ -53,7 +56,7 @@ class Validation {
             if(!filter_var($val, FILTER_VALIDATE_EMAIL)){
             $this->addError('email', 'email must be a valid email address');
             }
-        }
+        } 
 
     }
 
