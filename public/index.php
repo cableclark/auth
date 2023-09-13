@@ -3,13 +3,14 @@ require __DIR__ . '/../src/bootstrap.php';
 
 
 //Define routes Routes
-$router->get("/register");
+$router->get("/register", "register/index");
 
-$router->post("/register");
+$router->post("/register", "register/store");
 
-$router->post("/login");
+$router->post("/login", "login/index");
 
 $path = parse_url($_SERVER['REQUEST_URI'])['path'];
+
 
 $router->handle($path);
 

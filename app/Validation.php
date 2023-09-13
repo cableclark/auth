@@ -60,6 +60,24 @@ class Validation {
 
     }
 
+
+    private function uniqueEmail(){
+
+        $val = trim($this->data['email']);
+
+
+        $database = $container->resolve('app\Database');
+        
+        if(empty($val)){
+            $this->addError('email', 'email cannot be empty');
+        } else {
+            if(!filter_var($val, FILTER_VALIDATE_EMAIL)){
+            $this->addError('email', 'email must be a valid email address');
+            }
+        } 
+
+    }
+
     private function addError($key, $val){
 
         $this->errors[$key] = $val;
