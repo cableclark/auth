@@ -6,12 +6,12 @@ class Router {
 
     private $routes = [];
 
-    public function handle ($uri, $args=[]) {
 
+    public function handle ($uri, $method, $args=[]) {
 
         foreach ($this->routes as $route) {
             
-            if ($route["path"] === $uri && $_SERVER['REQUEST_METHOD'] == $route["method"] ) {
+            if ($route["path"] === $uri && $method == strtoupper($route["method"]) ) {
 
                 $method = $route["method"];
 
@@ -31,7 +31,6 @@ class Router {
         public function post ($route, $controller) {
             
             $route= $this->add('GET', $route, $controller);
-                
             
             return $this;
             
@@ -41,6 +40,32 @@ class Router {
         public function get ($route, $controller) {
             
             $route= $this->add('GET', $route, $controller);
+            
+            return $this;
+            
+        }
+
+
+        public function delete ($route, $controller) {
+            
+            $route= $this->add('DELETE', $route, $controller);
+            
+            return $this;
+            
+        }
+
+        public function put ($route, $controller) {
+            
+            $route= $this->add('PUT', $route, $controller);
+            
+            return $this;
+            
+        }
+
+
+        public function PATCH ($route, $controller) {
+            
+            $route= $this->add('PATCH', $route, $controller);
             
             return $this;
             
@@ -58,4 +83,4 @@ class Router {
             $this->routes[] = $route;
         }
 
-    }
+}
