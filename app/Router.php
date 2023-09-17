@@ -4,7 +4,7 @@ namespace App;
 
 class Router {
 
-    private $routes = [];
+    public $routes = [];
 
 
     public function handle ($uri, $method, $args=[]) {
@@ -30,7 +30,7 @@ class Router {
 
         public function post ($route, $controller) {
             
-            $route= $this->add('GET', $route, $controller);
+            $route= $this->add('POST', $route, $controller);
             
             return $this;
             
