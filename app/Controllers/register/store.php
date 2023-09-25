@@ -2,21 +2,19 @@
 
 namespace App\Controller;
 
+use App\Application as app;
 use App\Validation;
 
+// Validtate the input
 
-dd($_POST);
+$validation = new Validation($_POST);
 
+// if invalid return to view with data and errors
 
+// if validated ppplate database ands return confiramtion
 
-//Validtate the input
+$database = app::$container->resolve('app\Database');
 
-$validation = new Validation($_POST); 
-
-//if invalid return to view with data and errors
-
-
-//if validated ppplate database ands return confiramtion 
-
+$data = $database->query('INSERT INTO users (email, password) VALUES (:email, :password)');
 
 view('register.view', $validation->validateForm());
