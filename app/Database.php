@@ -15,13 +15,14 @@ class Database
     {
         $stmt = $this->pdo->prepare($query);
 
-        $stmt->bindParam(':email', $_POST['email'], \PDO::PARAM_STR);
-        $stmt->bindParam(':password', $_POST['password'], \PDO::PARAM_STR);
-
         if (!empty($args)) {
-            return $stmt->execute(...$args);
+            $stmt->execute($args);
+
+            return $stmt;
         } else {
-            return $stmt->execute();
+            $stmt->execute();
+
+            return $stmt;
         }
     }
 }

@@ -7,7 +7,15 @@ use App\Validation;
 
 // Validtate the input
 
-$validation = new Validation($_POST);
+$validation = (new Validation($_POST))->validateForm();
+
+dd($validation);
+
+if (!empty($validation)) {
+    view('register.view', $validation);
+
+    return;
+}
 
 // if invalid return to view with data and errors
 
@@ -15,6 +23,9 @@ $validation = new Validation($_POST);
 
 $database = app::$container->resolve('app\Database');
 
-$data = $database->query('INSERT INTO users (email, password) VALUES (:email, :password)');
+$data = $database->query('INSERT INTO users (email, password) VALUES (:email, :password)', [
+    'email' => $_POST['email'],
+    'password' => $_POST['password'],
+]);
 
-view('register.view', $validation->validateForm());
+view('register.view');

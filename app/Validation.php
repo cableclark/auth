@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Application as app;
+
 class Validation
 {
     private $data;
@@ -10,9 +12,11 @@ class Validation
 
     private static $fields = ['password', 'confirm-password', 'email'];
 
-    public function __construct($post_data)
+    public function __construct($postData)
     {
-        $this->data = $post_data;
+        $this->data = $postData;
+
+        return $this;
     }
 
     public function validateForm()
@@ -27,6 +31,7 @@ class Validation
 
         $this->validatePassword();
         $this->validateEmail();
+        $this->uniqueEmail();
 
         return $this->errors;
     }
@@ -37,25 +42,27 @@ class Validation
 
         $val2 = trim($this->data['confirm-password']);
 
-        if (empty($val)) {
-            $this->addError('password', 'password cannot be empty');
-        } elseif (!preg_match('/^[a-zA-Z0-9]{6,12}$/', $val)) {
-            $this->addError('password', 'password must be 6-12 chars & alphanumeric');
-        } elseif ($val !== $val2) {
-            $this->addError('email', 'email must be a valid email address');
-        }
+        $this->empty('password', $val);
+
+        $this->empty('cofirm-password', $val2);
+
+        $this->isAplhanumeric('password', $val);
+
+        $this->isAplhanumeric('cofirm-password', $val2);
+
+        $this->isMatched('passwords', $val, $val2);
+
+        dd($this->errors);
     }
 
     private function validateEmail()
     {
         $val = trim($this->data['email']);
 
-        if (empty($val)) {
-            $this->addError('email', 'email cannot be empty');
-        } else {
-            if (!filter_var($val, FILTER_VALIDATE_EMAIL)) {
-                $this->addError('email', 'email must be a valid email address');
-            }
+        $this->empty('email', $val);
+
+        if (!filter_var($val, FILTER_VALIDATE_EMAIL)) {
+            $this->addError('email', 'email must be a valid email address');
         }
     }
 
@@ -63,19 +70,50 @@ class Validation
     {
         $val = trim($this->data['email']);
 
-        $database = $container->resolve('app\Database');
+        // connect to database and try to retreive an entry with the same adress
 
-        if (empty($val)) {
-            $this->addError('email', 'email cannot be empty');
-        } else {
-            if (!filter_var($val, FILTER_VALIDATE_EMAIL)) {
-                $this->addError('email', 'email must be a valid email address');
-            }
+        $database = app::$container->resolve('app\Database');
+
+        $stmt = $database->query('SELECT email FROM users WHERE email = :email', [
+             'email' => $_POST['email'],
+         ]);
+
+        $val = $stmt->fetch();
+
+        // if result is not found proceeed, else add an error that the email has been used
+        if (!empty($val)) {
+            $this->addError('email', 'email is aleardy in use');
         }
     }
 
     private function addError($key, $val)
     {
-        $this->errors[$key] = $val;
+        if (isset($this->errors[$key])) {
+            array_push($this->errors[$key], $val);
+        } else {
+            $this->errors[$key] = [];
+            array_push($this->errors[$key], $val);
+        }
+    }
+
+    protected function empty($name, $value)
+    {
+        if (empty($value)) {
+            $this->addError($name, "$name cannot be empty");
+        }
+    }
+
+    protected function isAplhanumeric($name, $value)
+    {
+        if (!preg_match('/^[a-zA-Z0-9]{6,12}$/', $value)) {
+            $this->addError($name, "$name must be 6-12 chars & alphanumeric");
+        }
+    }
+
+    protected function isMatched($name, $first, $second)
+    {
+        if ($first !== $second) {
+            $this->addError($name, "$name passwords must match");
+        }
     }
 }
