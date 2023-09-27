@@ -10,17 +10,13 @@ class Validation
 
     public $errors = [];
 
-    private static $fields = ['password', 'confirm-password', 'email'];
+    private static $fields = ['password', 'confirmPassword', 'email'];
+
 
     public function __construct($postData)
     {
         $this->data = $postData;
 
-        return $this;
-    }
-
-    public function validateForm()
-    {
         foreach (self::$fields as $field) {
             if (!array_key_exists($field, $this->data)) {
                 trigger_error("'$field' is not present in the data");
@@ -29,9 +25,13 @@ class Validation
             }
         }
 
+        return $this;
+    }
+
+    public function validateForm()
+    {
         $this->validatePassword();
         $this->validateEmail();
-        $this->uniqueEmail();
 
         return $this->errors;
     }
@@ -40,19 +40,17 @@ class Validation
     {
         $val = trim($this->data['password']);
 
-        $val2 = trim($this->data['confirm-password']);
+        $val2 = trim($this->data['confirmPassword']);
 
         $this->empty('password', $val);
 
-        $this->empty('cofirm-password', $val2);
+        $this->empty('confirmPassword', $val2);
 
         $this->isAplhanumeric('password', $val);
 
-        $this->isAplhanumeric('cofirm-password', $val2);
+        $this->isAplhanumeric('confirmPassword', $val2);
 
-        $this->isMatched('passwords', $val, $val2);
-
-        dd($this->errors);
+        $this->isMatched('confirmPassword', $val, $val2);
     }
 
     private function validateEmail()
@@ -64,6 +62,8 @@ class Validation
         if (!filter_var($val, FILTER_VALIDATE_EMAIL)) {
             $this->addError('email', 'email must be a valid email address');
         }
+
+        $this->uniqueEmail();
     }
 
     private function uniqueEmail()
@@ -113,7 +113,7 @@ class Validation
     protected function isMatched($name, $first, $second)
     {
         if ($first !== $second) {
-            $this->addError($name, "$name passwords must match");
+            $this->addError($name, "Passwords must match");
         }
     }
 }

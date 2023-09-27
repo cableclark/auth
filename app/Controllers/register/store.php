@@ -7,12 +7,10 @@ use App\Validation;
 
 // Validtate the input
 
-$validation = (new Validation($_POST))->validateForm();
+$validationErrors = (new Validation($_POST))->validateForm();
 
-dd($validation);
-
-if (!empty($validation)) {
-    view('register.view', $validation);
+if (!empty($validationErrors)) {
+    view('register.view', $validationErrors);
 
     return;
 }

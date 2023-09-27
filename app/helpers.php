@@ -1,25 +1,29 @@
 <?php
 
 if (!function_exists('dd')) {
-
-    function dd ($arg) {
-        echo "<pre>"; 
-        var_dump ($arg);
-        echo "</pre>"; 
-        die();
+    function dd($arg)
+    {
+        echo '<pre>';
+        var_dump($arg);
+        echo '</pre>';
+        exit;
     }
-    
 }
 
-
 if (!function_exists('view')) {
-
-    function view ($view, $args=[]) {
-
+    function view($view, $args = [])
+    {
         extract($args);
-
-        require (__DIR__ . '/../views/'. $view . '.php');
-
+        dd($args);
+        require __DIR__.'/../views/'.$view.'.php';
     }
-    
+}
+
+if (!function_exists('displayErrors')) {
+    function displayErrors($type)
+    {
+            foreach ($type as $error) {
+                echo $error;
+            }
+    }
 }
