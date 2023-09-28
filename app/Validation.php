@@ -4,9 +4,9 @@ namespace App;
 
 use App\Application as app;
 
-class Validation
+class  Validation
 {
-    private $data;
+    protected array $data;
 
     public $errors = [];
 
@@ -16,7 +16,12 @@ class Validation
     public function __construct($postData)
     {
         $this->data = $postData;
+        $this->checkFields();
+        
+        return $this;
+    }
 
+    protected function checkFields () {
         foreach (self::$fields as $field) {
             if (!array_key_exists($field, $this->data)) {
                 trigger_error("'$field' is not present in the data");
@@ -24,49 +29,16 @@ class Validation
                 return;
             }
         }
+    } 
 
-        return $this;
-    }
-
-    public function validateForm()
+    protected function formatedEmail($value)
     {
-        $this->validatePassword();
-        $this->validateEmail();
-
-        return $this->errors;
-    }
-
-    private function validatePassword()
-    {
-        $val = trim($this->data['password']);
-
-        $val2 = trim($this->data['confirmPassword']);
-
-        $this->empty('password', $val);
-
-        $this->empty('confirmPassword', $val2);
-
-        $this->isAplhanumeric('password', $val);
-
-        $this->isAplhanumeric('confirmPassword', $val2);
-
-        $this->isMatched('confirmPassword', $val, $val2);
-    }
-
-    private function validateEmail()
-    {
-        $val = trim($this->data['email']);
-
-        $this->empty('email', $val);
-
-        if (!filter_var($val, FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
             $this->addError('email', 'email must be a valid email address');
         }
-
-        $this->uniqueEmail();
     }
 
-    private function uniqueEmail()
+    protected function uniqueEmail()
     {
         $val = trim($this->data['email']);
 
@@ -86,7 +58,9 @@ class Validation
         }
     }
 
-    private function addError($key, $val)
+
+
+    protected function addError($key, $val)
     {
         if (isset($this->errors[$key])) {
             array_push($this->errors[$key], $val);
@@ -96,12 +70,16 @@ class Validation
         }
     }
 
+
     protected function empty($name, $value)
     {
         if (empty($value)) {
             $this->addError($name, "$name cannot be empty");
         }
+
+    
     }
+
 
     protected function isAplhanumeric($name, $value)
     {
@@ -110,10 +88,12 @@ class Validation
         }
     }
 
+
     protected function isMatched($name, $first, $second)
     {
         if ($first !== $second) {
             $this->addError($name, "Passwords must match");
         }
     }
+
 }

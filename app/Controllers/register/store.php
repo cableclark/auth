@@ -3,27 +3,29 @@
 namespace App\Controller;
 
 use App\Application as app;
-use App\Validation;
+use App\RegistrationValidation;
 
-// Validtate the input
+//TODO make the router object oriented
 
-$validationErrors = (new Validation($_POST))->validateForm();
+$validationErrors = (new RegistrationValidation($_POST))->validateForm();
 
 if (!empty($validationErrors)) {
+
     view('register.view', $validationErrors);
 
     return;
 }
 
-// if invalid return to view with data and errors
-
-// if validated ppplate database ands return confiramtion
 
 $database = app::$container->resolve('app\Database');
 
+$email = filter_var( $_POST['email'],FILTER_SANITIZE_EMAIL);
+
+$hashed_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
 $data = $database->query('INSERT INTO users (email, password) VALUES (:email, :password)', [
-    'email' => $_POST['email'],
-    'password' => $_POST['password'],
+    'email' => $email,
+    'password' => $hashed_password,
 ]);
 
-view('register.view');
+view('login.view');

@@ -14,7 +14,7 @@ if (!function_exists('view')) {
     function view($view, $args = [])
     {
         extract($args);
-        dd($args);
+    
         require __DIR__.'/../views/'.$view.'.php';
     }
 }
@@ -23,7 +23,7 @@ if (!function_exists('displayErrors')) {
     function displayErrors($type)
     {
             foreach ($type as $error) {
-                echo $error;
+                echo "<div class='text-red-200'>$error</div>";
             }
     }
 }
