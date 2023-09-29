@@ -16,6 +16,7 @@ class Database
         $stmt = $this->pdo->prepare($query);
 
         if (!empty($args)) {
+        
             $stmt->execute($args);
 
             return $stmt;
