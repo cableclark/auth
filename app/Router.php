@@ -2,68 +2,100 @@
 //Make the router object oriented
 namespace App;
 
+use App\Controller;
+
 class Router
 {
     public $routes = [];
 
     public function handle($uri, $method, $args = [])
     {
+        
+        
         foreach ($this->routes as $route) {
+            
             if ($route['path'] === $uri && $method == strtoupper($route['method'])) {
-                $method = $route['method'];
 
-                require __DIR__.'/Controllers/'.$route['controller'].'.php';
+               
+                //Call the function with arguments 
+                if ( is_callable($route['controller']) ) {
+                    call_user_func($route['controller']);
+                }
 
-                return;
+                //Instatiate a Controller class and call the action on it
+
+                $action = $route['action'];
+
+                $class =  "App\Controller\\". $route['controller'];
+
+                if (class_exists($class)) {
+                    
+                    if (method_exists($class, $action)) {
+                
+                        return (new $route['controller'])->$action(); 
+
+                    }
+
+                    return;
+                }
+
+                $this->returnToHome();
             }
         }
 
-        require __DIR__.'/../views/index.view.php';
+      
     }
 
-    public function post($route, $controller)
+    public function post($route, $controller, $action ="")
     {
-        $route = $this->add('POST', $route, $controller);
+        $route = $this->add('POST', $route, $controller, $action);
 
            return $this;
     }
 
-    public function get($route, $controller)
+    public function get($route, $controller, $action ="")
     {
-        $route = $this->add('GET', $route, $controller);
+        $route = $this->add('GET', $route, $controller, $action);
 
         return $this;
     }
 
-    public function delete($route, $controller)
+    public function delete($route, $controller, $action ="")
     {
-        $route = $this->add('DELETE', $route, $controller);
+        $route = $this->add('DELETE', $route, $controller, $action);
 
         return $this;
      }
 
-    public function put($route, $controller)
+    public function put($route, $controller, $action ="")
     {
-        $route = $this->add('PUT', $route, $controller);
+        $route = $this->add('PUT', $route, $controller, $action);
 
         return $this;
     }
 
-    public function PATCH($route, $controller)
+    public function PATCH($route, $controller, $action ="")
     {
-        $route = $this->add('PATCH', $route, $controller);
+        $route = $this->add('PATCH', $route, $controller, $action);
 
         return $this;
     }
 
-    protected function add($method, $path, $controller)
+    protected function add($method, $path, $controller, $action="" )
     {
         $route = [
             'path' => $path,
             'controller' => $controller,
             'method' => $method,
+            'action' => $action,
         ];
 
         $this->routes[] = $route;
+    }
+
+    protected function returnToHome() {
+        header("HTTP/1.1 404 Not Found");
+        require __DIR__.'/../views/index.view.php';
+        die (); 
     }
 }

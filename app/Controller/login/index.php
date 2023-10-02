@@ -3,4 +3,4 @@
 namespace App\Controller;
 
 
-view("login.view");
+view("login");

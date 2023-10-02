@@ -2,14 +2,19 @@
 require __DIR__ . '/../src/bootstrap.php';
 
 session_start();
+
 //Define routes Routes
-$router->get("/register", "register/index");
+$router->get("/register", "Register", "index");
 
-$router->post("/register", "register/store");
+$router->post("/register", "Register", "store");
 
-$router->get("/login", "login/index");
+$router->get("/login", "Login", "index");
 
-$router->post("/login", "login/login");
+$router->post("/login", "login", "login");
+
+$router->get("/", function () {
+    return view("index.view");
+});
 
 $path = parse_url($_SERVER['REQUEST_URI'])['path'];
 

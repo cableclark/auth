@@ -3,4 +3,4 @@
 namespace App;
 
 
-view('register.view');
+view('register');

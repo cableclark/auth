@@ -28,4 +28,4 @@ $data = $database->query('INSERT INTO users (email, password) VALUES (:email, :p
     'password' => $hashed_password,
 ]);
 
-view('login.view');
+view('login');

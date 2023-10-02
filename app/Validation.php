@@ -4,7 +4,7 @@ namespace App;
 
 use App\Application as app;
 
-class  Validation
+class Validation
 {
     protected array $data;
 
