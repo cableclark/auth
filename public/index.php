@@ -10,7 +10,7 @@ $router->post("/register", "Register", "store");
 
 $router->get("/login", "Login", "index");
 
-$router->post("/login", "login", "login");
+$router->post("/login", "Login", "login");
 
 $router->get("/", function () {
     return view("index.view");

@@ -2,25 +2,23 @@
 //Make the router object oriented
 namespace App;
 
-use App\Controller;
-
 class Router
 {
     public $routes = [];
 
-    public function handle($uri, $method, $args = [])
+    public function handle($uri, $method)
     {
         
         
         foreach ($this->routes as $route) {
-            
+
             if ($route['path'] === $uri && $method == strtoupper($route['method'])) {
 
                
                 //Call the function with arguments 
                 if ( is_callable($route['controller']) ) {
                     call_user_func($route['controller']);
-                }
+                }   
 
                 //Instatiate a Controller class and call the action on it
 
@@ -28,21 +26,19 @@ class Router
 
                 $class =  "App\Controller\\". $route['controller'];
 
+            
                 if (class_exists($class)) {
                     
                     if (method_exists($class, $action)) {
                 
-                        return (new $route['controller'])->$action(); 
+                        return (new $class)->$action(); 
 
                     }
-
-                    return;
-                }
-
-                $this->returnToHome();
+                } 
             }
         }
 
+        $this->returnToHome();
       
     }
 
@@ -94,8 +90,10 @@ class Router
     }
 
     protected function returnToHome() {
+
         header("HTTP/1.1 404 Not Found");
         require __DIR__.'/../views/index.view.php';
         die (); 
+
     }
 }
