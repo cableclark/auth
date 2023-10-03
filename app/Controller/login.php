@@ -5,13 +5,17 @@ use App\Application as app;
 
 class Login {
     
-    public function index (){
+
+    public function index ()
+    {
 
         return view("login.view");
 
     }
+    
 
-    public function login (){
+    public function login ()
+    {
 
         $database = app::$container->resolve('app\Database');
 
@@ -34,10 +38,10 @@ class Login {
             session_regenerate_id();
             $_SESSION["email"] = $email;
             $_SESSION["password"] = $user["password"];
-            echo "we are in";
+            view('dashboard.view');
 
         } else {
-            echo "No can do";
+            view('login.view');
         }
         
     }
