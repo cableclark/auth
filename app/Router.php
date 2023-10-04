@@ -18,6 +18,7 @@ class Router
                 //Call the function with arguments 
                 if ( is_callable($route['controller']) ) {
                     call_user_func($route['controller']);
+                    return;
                 }   
 
                 //Instatiate a Controller class and call the action on it

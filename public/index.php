@@ -1,7 +1,8 @@
 <?php 
-require __DIR__ . '/../src/bootstrap.php';
 
 session_start();
+
+require __DIR__ . '/../src/bootstrap.php';
 
 //Define routes Routes
 $router->get("/register", "Register", "index");

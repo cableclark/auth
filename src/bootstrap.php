@@ -6,7 +6,7 @@ use App\Router;
 
 const BASE_APP_DIR = __DIR__.'/../';
 
-require __DIR__.'\..\vendor\autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 
 spl_autoload_register(function ($class) {
     $class = str_replace('//', DIRECTORY_SEPARATOR, $class);
@@ -20,8 +20,8 @@ $container = new Container();
 
 app::setContainer($container);
 
-require BASE_APP_DIR.'App\helpers.php';
+require BASE_APP_DIR.'App/helpers.php';
 
-require BASE_APP_DIR.'App\DatabaseProvider.php';
+require BASE_APP_DIR.'App/DatabaseProvider.php';
 
 $router = new Router();
