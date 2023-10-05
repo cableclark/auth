@@ -21,9 +21,12 @@ services:
   mariadb:
     image: mariadb:10.11
     environment:
-      MYSQL_ROOT_PASSWORD: your_password
+      MYSQL_ROOT_PASSWORD: password!kgd
+      MYSQL_DATABASE: test
+      MYSQL_USER: roots
+      MYSQL_PASSWORD: password!kgd
     volumes:
-      - mysqldata:/var/lib/mysql
+      - mysqldata12:/var/lib/mysql
 
   # phpMyAdmin Service
   phpmyadmin:

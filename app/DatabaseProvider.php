@@ -7,9 +7,11 @@ require __DIR__.'/../src/config.php';
 
 $config = require __DIR__.'/../src/config.php';
 
+// dd($config['database']);
+
 app::$container->bind('app\Database', function (array $config) {
     $dsn = "mysql:host={$config['host']};dbname={$config['dbname']};port={$config['port']};charset={$config['charset']};";
-
+    
     $options = [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
