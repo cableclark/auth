@@ -13,7 +13,7 @@ class Validation
     private static $fields = ['password', 'confirmPassword', 'email'];
 
 
-    public function __construct($postData)
+    public function __construct(array $postData)
     {
         $this->data = $postData;
         $this->checkFields();
@@ -31,7 +31,7 @@ class Validation
         }
     } 
 
-    protected function formatedEmail($value)
+    protected function formatedEmail(string $value)
     {
         if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
             $this->addError('email', 'email must be a valid email address');
