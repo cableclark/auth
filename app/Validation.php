@@ -6,16 +6,15 @@ use App\Application as app;
 
 class Validation
 {
-    protected array $data;
-
-    public $errors = [];
 
     private static $fields = ['password', 'confirmPassword', 'email'];
 
-
-    public function __construct(array $postData)
+    public function __construct(
+        protected array  $data,
+        public $errors = []
+        )
     {
-        $this->data = $postData;
+        
         $this->checkFields();
         
         return $this;
@@ -81,7 +80,7 @@ class Validation
     }
 
 
-    protected function isAplhanumeric($name, $value)
+    protected function isAplhanumeric(string $name,string $value)
     {
         if (!preg_match('/^[a-zA-Z0-9]{6,12}$/', $value)) {
             $this->addError($name, "$name must be 6-12 chars & alphanumeric");
