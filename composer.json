@@ -14,5 +14,8 @@
             "name": "Igor Stojanovski",
             "email": "cableclark@gmail.com"
         }
-    ]
+    ],
+    "require-dev": {
+        "symfony/var-dumper": "^6.3"
+    }
 }

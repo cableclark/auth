@@ -41,7 +41,7 @@ class Login {
             view('dashboard.view');
 
         } else {
-            view('login.view');
+            view('dashboard.view');
         }
         
     }

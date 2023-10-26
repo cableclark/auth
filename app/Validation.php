@@ -10,7 +10,7 @@ class Validation
     private static $fields = ['password', 'confirmPassword', 'email'];
 
     public function __construct(
-        protected array  $data,
+        protected array $data,
         public $errors = []
         )
     {

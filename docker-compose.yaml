@@ -26,7 +26,7 @@ services:
       MYSQL_USER: roots
       MYSQL_PASSWORD: password!kgd
     volumes:
-      - mysqldata12:/var/lib/mysql
+      - mysqldata:/var/lib/mysql
 
   # phpMyAdmin Service
   phpmyadmin:
